@@ -4,5 +4,6 @@
 ![Dark theme with high contrast](images/dark_hard.png)
 
 ### Dark - medium contrast
+![Dark theme with medium contrast](images/dark_medium.png)
 
 ### Dark - soft contrast
