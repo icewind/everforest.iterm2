@@ -47,15 +47,22 @@ if __name__ == "__main__":
             content = theme.copy()
 
             for name, slug in content.items():
-                if "." in slug:
-                    path = slug
+                color_dictionary = {}
+                if slug.stratswith("#"):
+                    color_dictionary = get_color_dict(get_color_components(slug))
+                elif "." in slug:
+                    color_dictionary = get_color_dict(
+                        get_color_components(
+                            reduce(operator.getitem, slug.split("."), palette)
+                        )
+                    )
                 else:
                     path = f"{variant}.{'background.' + contrast if slug.startswith('bg') else 'foreground'}.{slug}"
-                content[name] = get_color_dict(
-                    get_color_components(
-                        reduce(operator.getitem, path.split("."), palette)
+                    color_dictionary = get_color_dict(
+                        get_color_components(
+                            reduce(operator.getitem, path.split("."), palette)
+                        )
                     )
-                )
-
+                content[name] = color_dictionary
             with open(file_path, "wb") as f:
                 plistlib.dump(content, f)
